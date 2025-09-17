@@ -36,7 +36,53 @@ written in C++ and compiled with emscripten, incorporates OpenCV to process the 
 You can download the [Docker container image for the UNSLAM system from this link](https://drive.google.com/file/d/1bbYczytUE1hg_rWUzoSy8ynT70jD-tuJ/view?usp=drive_link) (2.78GB, Aug 2025).
 
 
-*Instructions...*
+To use the system, you must have Docker installed, the camera calibrated, and its parameters loaded into the Visual Slam configuration file.
+
+## Camera Calibration
+You must calibrate the camera you will use with the browser, usually your phone's camera. This is a technical step that can be performed with dedicated applications; [this OpenCV tutorial](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html) explains how to calibrate cameras.
+
+The camera calibration process estimates the **intrinsic parameters** (fx, fy, cx, cy) and **distortion coefficients** (kn), which must be transcribed to the **config.yaml** file as follows:
+
+```yaml
+Camera:
+  name: "some arbitrary and descriptive camera name"
+  setup: "monocular"
+  model: "perspective"
+
+  cols: 640
+  rows: 480
+  fx: 485
+  fy: 485
+  cx: 320
+  cy: 240
+
+  k1: 0.0
+  k2: 0.0  
+  p1: 0.0  
+  p2: 0.0
+  k3: 0.0
+
+  fps: 30.0
+
+  color_order: "BGR"
+
+Mapping:
+
+```
+
+## Installing Docker and Running the Container
+The UNSLAM25/stella_vslam repository has [instructions](https://github.com/UNSLAM25/stella_vslam/blob/main/build-docker.md)
+ for installing Docker on Linux and Windows, and for running the system from its image.
+
+It also has instructions for building the image, but they are not necessary if you download it from the provided link.
+
+
+## Opening the web page
+The container runs a web server, in the console it shows its IP address and port.  For simplicity, the server doesn't use certificates and doesn't use https, it only use http.
+
+In order to the web page properly work, the browser has to open it as a secure page.  In Chrome you can do this adding the address to flags in:
+
+    chrome://flags/#unsafely-treat-insecure-origin-as-secure
 
 
 # UNSLAM Repositories
